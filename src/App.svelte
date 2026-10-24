@@ -3,6 +3,7 @@
   import { dayKey, addDays, checkinOn, averageEnergy, checkinStreak, energySeries, parseEnergy, type Checkin } from './logic';
   import { paletteFrom, type Palette } from './palette';
   import { offerTracker } from './tracker-offer';
+  import { onPrefsChange } from './prefs-live';
 
   // Pulse uses several plugin functions. Each one is declared in `uses`, which the app checks.
   const USES = [
@@ -165,7 +166,8 @@
       addToMoreMenu: true,
       addToWidgets: true,
     });
-    plugin.onRegistered(async () => {
+    onPrefsChange(plugin, () => applyNomieValues());
+  plugin.onRegistered(async () => {
       applyNomieValues();
       await load();
       await refresh();
